@@ -1,9 +1,7 @@
 package br.com.psg.produto.controller;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -11,9 +9,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
 
-import org.apache.commons.fileupload.FileItem;
-import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
 import br.com.psg.produto.dao.ProdutoDAO;
@@ -29,8 +26,8 @@ import br.com.psg.produto.modal.Produto;
 public class CadastroController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	private static final String uploadPath = System.getProperty("user.dir") + "/";
-
+	private final String uploadPath = "C:/uploads/";
+	
 	private ProdutoDAO produtoDao = ProdutoDAOImpl.getInstance();
 
 	public CadastroController() {
@@ -44,15 +41,25 @@ public class CadastroController extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		
+
 		String prodId = request.getParameter("id");
 		String nome = request.getParameter("nome");
 		String tipo = request.getParameter("tipo");
 		double preco = Double.parseDouble(request.getParameter("preco"));
 		String vencimento = request.getParameter("vencimento");
-		String upload = request.getParameter("upload");
 
 		Produto produto = new Produto(nome, tipo, preco, vencimento);
+		
+		Part upload = request.getPart("upload");
+
+		if (upload != null) {
+            System.out.println(upload.getName());
+            System.out.println(upload.getSize());
+            System.out.println(upload.getContentType());
+            System.out.println(upload.getSubmittedFileName());
+             
+        }
+		
 
 		PrintWriter out = response.getWriter();
 
@@ -63,19 +70,16 @@ public class CadastroController extends HttpServlet {
 		}
 
 		try {
-			List<FileItem> fileItems = new ServletFileUpload(new DiskFileItemFactory()).parseRequest(request);
-			for (FileItem item : fileItems) {
-				if(item.getFieldName().equals("upload")) {
-					
-					String fileName = System.currentTimeMillis() + "_" + item.getName();
+			
+				if (upload != null) {
 
-					File file = new File(uploadPath + fileName);
+					String fileName = System.currentTimeMillis() + "_"  + upload.getSubmittedFileName();
 
-					item.write(file);
+					upload.write(uploadPath + fileName);
 					produto.setArquivo(fileName);
-					
+
 				}
-			}
+			
 
 			if (prodId == null || prodId == "")
 				produtoDao.saveProduto(produto);
@@ -84,15 +88,14 @@ public class CadastroController extends HttpServlet {
 				produto.setId(id);
 				produtoDao.updateProduto(produto);
 			}
-			
-			out.println("<h1>Arquivo gravado!</h1>");
+
 
 		} catch (Exception e) {
-			out.println("<h1>Erro ao escrever no arquivo!</h1>");
+			out.println("Erro 001 CadastroController: " + e.getMessage());
 			return;
 		}
 
-		//response.sendRedirect(request.getContextPath() + "/");
+		response.sendRedirect(request.getContextPath() + "/");
 	}
 
 }

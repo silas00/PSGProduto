@@ -88,6 +88,8 @@
 			<th>Vencimento</th>
 			<th>Update</th>
 			<th>Delete</th>
+			<th>Download	</th>
+			
 		</tr>
 		<c:forEach items="${listProduto}" var="produto">
 			<tr>
@@ -96,6 +98,7 @@
 				<td>${produto.tipo}</td>
 				<td>${produto.preco}</td>
 				<td>${produto.vencimento}</td>
+				
 				
 				<td>
 					<form action="<c:url value="/produto/update"/>" method="post">
@@ -107,6 +110,8 @@
 						<input type="hidden" name="prodId" value="${produto.id}">
 						<input style="background: #F00;" type="submit" value="Delete">
 					</form>
+				<td>
+					<a href="/produto/download?id=${produto.id}">Download</a>
 				</td>
 			</tr>
 		</c:forEach>
