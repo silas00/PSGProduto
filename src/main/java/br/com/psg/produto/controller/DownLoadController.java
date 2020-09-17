@@ -1,9 +1,10 @@
 package br.com.psg.produto.controller;
 
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -34,11 +35,9 @@ public class DownLoadController extends HttpServlet {
 			Long id = Long.parseLong(request.getParameter("id"));
 			Produto produto = dao.findProdutoById(id);
 
-			byte[] uploadedFile;
+			String filePath = uploadPath + produto.getArquivo();
 
-			File file = new File(uploadPath + produto.getArquivo());
-
-			uploadedFile = new byte[(int) file.length()];
+			byte[] uploadedFile = Files.readAllBytes(Paths.get(filePath));
 
 			ByteArrayOutputStream baos = new ByteArrayOutputStream(uploadedFile.length);
 			baos.write(uploadedFile, 0, uploadedFile.length);
@@ -58,7 +57,7 @@ public class DownLoadController extends HttpServlet {
 		catch (Exception e) {
 
 			System.out.println("Erro 003 DownLoadController: " + e.getMessage());
-			
+
 		}
 	}
 }

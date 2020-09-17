@@ -7,6 +7,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Lista de Produtos</title>
 
+<c:url value="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" var="cssPath" />
+<link rel="stylesheet" href="${cssPath}" />
+ 
 <style type="text/css">
 	body{
 		text-align: center;
@@ -23,15 +26,11 @@
 	input[type=text], input[type=email], input[type=tel]{
 		min-width: 60%;
 	}
-	input[type=submit], a{
-		background: green;
-		padding: 5px;
-		margin: 5px;
-		color: #FFF;
-	}
+	
 	a{
 		text-decoration: none;
 	}
+	
 </style>
 </head>
 <body>
@@ -67,12 +66,12 @@
 			</tr>	
 			<c:if test="${produto.id ne null}">
 				<tr>
-					<td colspan="2"><input type="submit" value="Atualizar"></td>
+					<td colspan="2"><input class="btn btn-success" type="submit" value="Atualizar"></td>
 				</tr>
 			</c:if>
 			<c:if test="${produto.id eq null}">
 				<tr>
-					<td colspan="2"><input type="submit" value="Cadastrar"></td>
+					<td colspan="2"><input class="btn btn-success" type="submit" value="Cadastrar"></td>
 				</tr>
 			</c:if>
 		</table>
@@ -103,15 +102,18 @@
 				<td>
 					<form action="<c:url value="/produto/update"/>" method="post">
 						<input type="hidden" name="prodId" value="${produto.id}">
-						<input type="submit" value="Atualizar">
+						<input class="btn btn-primary" type="submit" value="Atualizar">
 					</form>
 				<td>
 					<form action="<c:url value="/produto/delete"/>" method="post">
 						<input type="hidden" name="prodId" value="${produto.id}">
-						<input style="background: #F00;" type="submit" value="Delete">
+						<input class="btn btn-danger" type="submit" value="Delete">
 					</form>
 				<td>
-					<a href="/produto/download?id=${produto.id}">Download</a>
+					<form action="<c:url value="/produto/download"/>" method="get">
+						<input type="hidden" name="id" value="${produto.id}">
+						<input class="btn btn-info" type="submit" value="Download">
+					</form>
 				</td>
 			</tr>
 		</c:forEach>
