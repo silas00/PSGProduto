@@ -63,22 +63,16 @@ public class CadastroController extends HttpServlet {
 
 		PrintWriter out = response.getWriter();
 
-		boolean isMultipart = ServletFileUpload.isMultipartContent(request);
-		if (!isMultipart) {
+		if (upload.getContentType() == "") {
 			out.println("<h1>Voce não enviou um arquivo!</h1>");
 			return;
 		}
-
+		
 		try {
-			
-				if (upload != null) {
+				String fileName = System.currentTimeMillis() + "_"  + upload.getSubmittedFileName();
 
-					String fileName = System.currentTimeMillis() + "_"  + upload.getSubmittedFileName();
-
-					upload.write(uploadPath + fileName);
-					produto.setArquivo(fileName);
-
-				}
+				upload.write(uploadPath + fileName);
+				produto.setArquivo(fileName);
 			
 
 			if (prodId == null || prodId == "")
