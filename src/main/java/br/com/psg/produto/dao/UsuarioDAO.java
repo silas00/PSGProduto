@@ -6,8 +6,6 @@ public interface UsuarioDAO {
 		
 		Long saveUsuario(Usuario usuario);
 
-		void deleteUsuario(Long id);
-		
-		Usuario findProdutoById(Long id);
+		Usuario findUsuarioByUsuario(String usuario);
 
 }

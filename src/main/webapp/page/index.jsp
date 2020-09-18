@@ -32,15 +32,13 @@
 	crossorigin="anonymous"></script>
 </head>
 <style>
-html, body{
+html, body {
 	height: 100vh;
 	justify-content: center;
 	align-items: center;
 }
-
 </style>
-<body
-	class="d-flex w-100">
+<body class="d-flex w-100">
 
 	<div
 		class="container position-absolute mb-4 d-flex align-items-center flex-column justify-content-beetwen ">
@@ -48,16 +46,18 @@ html, body{
 		<img class="img-fluid w-40" src="/produto/img" />
 		<div class="centro w-40 bg-white">
 
-			<form>
+			<c:url value="/usuario/login" var="loginUsuario" />
+			
+			<form action="${loginUsuario}" method="post">
 				<div class="form-group">
 					<label for="exampleInputEmail1">Email</label> <input type="email"
 						class="form-control" id="exampleInputEmail1"
-						aria-describedby="emailHelp" placeholder="Digite aqui seu email.">
+						aria-describedby="emailHelp" placeholder="Digite aqui seu email." name="login">
 				</div>
 				<div class="form-group">
 					<label for="exampleInputPassword1">Senha</label> <input
 						type="password" class="form-control" id="exampleInputPassword1"
-						placeholder="Digite aqui sua senha.">
+						placeholder="Digite aqui sua senha." name="password">
 				</div>
 				<div>
 					<small id="emailHelp" class="form-text text-muted">Nunca
@@ -82,19 +82,21 @@ html, body{
 								<span aria-hidden="true">&times;</span>
 							</button>
 						</div>
-						<form class="align-items-center justify-content-beetwen" action="${cadastroUsuario}" method="post">
+						<form class="align-items-center justify-content-beetwen"
+							action="${cadastroUsuario}" method="post">
 							<div class="modal-body">
 
 								<div class="form-group">
 									<label for="exampleInputEmail1">Digite seu email</label> <input
 										type="email" class="form-control" id="exampleInputEmail1"
-										aria-describedby="emailHelp" placeholder="Enter email" name="nome" value="${produto.nome}">
-
-									<label for="exampleInputPassword1">Digite uma senha</label> <input
+										aria-describedby="emailHelp" placeholder="Enter email"
+										name="nome" value="${produto.nome}"> <label
+										for="exampleInputPassword1">Digite uma senha</label> <input
 										type="password" class="form-control"
-										id="exampleInputPassword1" placeholder="Password" name="senha" value="${produto.senha}">
+										id="exampleInputPassword1" placeholder="Password" name="senha"
+										value="${produto.senha}">
 									<button type="submit" class="btn btn-success mt-4 float-right">Cadastrar</button>
-									
+
 								</div>
 							</div>
 						</form>
