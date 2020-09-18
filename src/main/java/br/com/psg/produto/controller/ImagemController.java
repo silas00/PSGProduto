@@ -24,7 +24,7 @@ public class ImagemController extends HttpServlet {
     		throws ServletException, IOException 
     {
     	
-    	String imageId = "C:/PSGProduto/src/main/webapp/TOP.png";//request.getParameter("imageId");
+    	String imageId = "C:/Users/soliveira/PSGProduto/src/main/webapp/TOP.png";//request.getParameter("imageId");
     	
     	byte[] imageData = carregarImagem(imageId);
     	

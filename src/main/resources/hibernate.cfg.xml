@@ -25,6 +25,7 @@
 		
 		<!-- Resource Mapping -->
 		<mapping class="br.com.psg.produto.modal.Produto"/>
+		<mapping class="br.com.psg.produto.modal.Usuario"/>
 		
 	</session-factory>
 </hibernate-configuration>
