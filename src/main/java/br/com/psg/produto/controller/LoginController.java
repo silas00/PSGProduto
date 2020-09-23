@@ -15,30 +15,35 @@ import br.com.psg.produto.modal.Usuario;
 @WebServlet("/usuario/login")
 public class LoginController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-    public LoginController() {
-        super();
-        
-    }
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public LoginController() {
+		super();
+
+	}
+
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		request.getRequestDispatcher("/").forward(request, response);
 	}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
 		UsuarioDAO usuarioDao = UsuarioDAOImpl.getInstance();
-		
+
 		String nome = request.getParameter("login");
 		String senha = request.getParameter("password");
-		
+
 		Usuario usuario = usuarioDao.findUsuarioByUsuario(nome);
 
-		if (senha != usuario.getSenha()) {
-			
-			return;
-		} 
-		
-		doGet(request, response);
-	}
+		if (senha.equals(usuario.getSenha())) {
 
+			doGet(request, response);
+			
+		} else {
+
+			return;
+		}
+
+	}
 }

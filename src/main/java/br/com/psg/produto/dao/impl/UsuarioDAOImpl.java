@@ -34,9 +34,9 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 		try {
 
 			Session session = this.sessionFactory.openSession();
-			String hql = "select id, userName, password from USUARIO where userName= :usuario";
+			String hql = "from Usuario where userName= :usuario";
 			Query query = session.createQuery(hql);
-			query.setParameter(":usuario", usuario);
+			query.setParameter("usuario", usuario);
 			us = (Usuario) query.list().get(0);
 			
 			session.close();
