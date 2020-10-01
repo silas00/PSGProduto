@@ -118,7 +118,7 @@ h1 {
 			<div class="form-group row">
 
 				<label for="formGroupExampleInput">Vencimento:</label> <input
-					class="form-control" type="text" name="vencimento"
+					class="form-control datepicker" type="date" name="vencimento"
 					value="${produto.vencimento}" required>
 
 			</div>
